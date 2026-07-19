@@ -3,9 +3,11 @@
 | Field | Value |
 |-------|-------|
 | Local | http://localhost:5173 |
-| Public | `PENDING` — set after GitHub Pages deploy |
-| Expected Pages URL | `https://qsaquant.github.io/sendit/` (confirm after first Actions run) |
-| Repo | created as `sendit` under GitHub account used for deploy |
+| **Public** | **https://qsaquant.github.io/sendit/** |
+| Repo | https://github.com/QSAQuant/sendit |
+| Peel clip | https://qsaquant.github.io/sendit/lobby/peel-clip.svg |
+| Icon | https://qsaquant.github.io/sendit/icon-64.svg |
+| Redeploy | See `docs/deploy.md` |
 
 ## Controls (for BD playtests)
 - **SEND** — join next fuse (Space)
