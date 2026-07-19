@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>SENDIT — Don't paper.</title>
+    <meta
+      name="description"
+      content="SENDIT is an always-on social crash game. Ride the fuse with the pack. Peel half. Don't paper."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <header class="top">
+        <div class="brand">
+          <div class="brand-row">
+            <span class="brand-mark">SENDIT</span>
+            <span class="live-pill">LIVE</span>
+          </div>
+          <span class="brand-tag">DON&apos;T PAPER.</span>
+        </div>
+        <div class="stats">
+          <div>
+            <span class="label">Online</span>
+            <span id="online" class="stat">—</span>
+          </div>
+          <div>
+            <span class="label">Bank</span>
+            <span id="balance" class="stat acid">1,000.00</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="coach" id="coach">
+        <span class="coach-verbs">SEND → PEEL 50% → CASH</span>
+        <span class="coach-tag">Don't paper.</span>
+      </div>
+
+      <div class="progress-row">
+        <div class="xp-wrap">
+          <div class="xp-meta">
+            <span id="level">LVL 1</span>
+            <span id="streak">0 STREAK</span>
+          </div>
+          <div class="xp-bar"><div id="xp-fill" class="xp-fill"></div></div>
+        </div>
+        <div class="heat-wrap">
+          <span class="label">Heat</span>
+          <div class="heat-bar"><div id="heat-fill" class="heat-fill"></div></div>
+        </div>
+      </div>
+
+      <main class="stage">
+        <canvas id="canvas" width="720" height="420"></canvas>
+        <div id="overlay" class="overlay">
+          <div id="status" class="status">WAIT FOR FUSE</div>
+          <div id="mult" class="mult">1.00×</div>
+          <div id="hint" class="hint">Peel half. Chase more. Don&apos;t paper.</div>
+        </div>
+        <div id="toast" class="toast" hidden></div>
+        <aside id="feed" class="feed"></aside>
+        <div class="king">
+          <span class="label">King</span>
+          <span id="king">—</span>
+        </div>
+      </main>
+
+      <section class="ridges">
+        <button type="button" class="ridge" data-ridge="calm">
+          <span class="ridge-name">SLOW</span>
+          <span class="ridge-meta">Grip</span>
+        </button>
+        <button type="button" class="ridge active" data-ridge="rise">
+          <span class="ridge-name">SEND</span>
+          <span class="ridge-meta">Standard</span>
+        </button>
+        <button type="button" class="ridge" data-ridge="spike">
+          <span class="ridge-name">DEGEN</span>
+          <span class="ridge-meta">Savage</span>
+        </button>
+      </section>
+
+      <section class="controls">
+        <div class="field">
+          <label for="bet">Stake</label>
+          <div class="input-row">
+            <button type="button" data-bet-adj="-1" class="chip">−</button>
+            <input id="bet" type="number" min="1" step="1" value="10" />
+            <button type="button" data-bet-adj="1" class="chip">+</button>
+          </div>
+          <div class="quick">
+            <button type="button" data-bet-set="5">5</button>
+            <button type="button" data-bet-set="10">10</button>
+            <button type="button" data-bet-set="25">25</button>
+            <button type="button" data-bet-set="50">50</button>
+          </div>
+        </div>
+
+        <div class="toggles">
+          <label class="toggle">
+            <input id="auto" type="checkbox" />
+            <span>Auto-send every fuse</span>
+          </label>
+          <button id="mute" type="button" class="mute">SFX ON</button>
+        </div>
+
+        <div class="actions sticky-actions">
+          <button id="primary" type="button" class="btn primary">SEND</button>
+          <button id="peel" type="button" class="btn ghost" disabled>PEEL 50%</button>
+          <button id="cashout" type="button" class="btn ghost" disabled>CASH</button>
+        </div>
+        <p class="controls-help">
+          Tap SEND before the fuse · PEEL banks half · CASH exits · keys: Space / P / 1–3
+        </p>
+      </section>
+
+      <footer class="meta">
+        <div>
+          <span class="label">Round</span>
+          <span id="round">1</span>
+        </div>
+        <div>
+          <span class="label">Snap</span>
+          <span id="crash-at">—</span>
+        </div>
+        <div class="fair">
+          <span class="label" id="fair-label">Hash</span>
+          <span id="fair-value" class="fair-value">—</span>
+        </div>
+        <div>
+          <span class="label">Tape</span>
+          <span id="history">—</span>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
