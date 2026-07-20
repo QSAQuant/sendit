@@ -504,6 +504,173 @@ input[type="number"] {
   line-height: 1.35;
 }
 
+.loadout-code {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--copper);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.snap-input {
+  width: 72px;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  padding: 8px;
+}
+
+.illusion-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.itab {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--fog);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.itab.active {
+  border-color: var(--acid);
+  color: var(--acid);
+}
+
+.drawer {
+  background: color-mix(in srgb, var(--panel) 94%, black);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.drawer-title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.drawer-lead {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--fog);
+  line-height: 1.4;
+}
+
+.drawer-body {
+  display: grid;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.pay-row,
+.myth-card,
+.verify-row {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--ink);
+}
+
+.myth-card strong {
+  display: block;
+  color: var(--acid);
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.myth-card button {
+  margin-top: 8px;
+}
+
+.heat-bar-row {
+  display: grid;
+  grid-template-columns: 52px 1fr 40px;
+  gap: 8px;
+  align-items: center;
+}
+
+.heat-track {
+  height: 10px;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.heat-fill-band {
+  height: 100%;
+  background: var(--acid);
+}
+
+.verify-ok {
+  color: var(--ok);
+}
+
+.verify-bad {
+  color: var(--danger);
+}
+
+.lab-grid {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.lab-grid label {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--fog);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lab-grid input {
+  background: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--paper);
+  font-family: var(--font-mono);
+  padding: 10px;
+}
+
+.lab-out {
+  margin: 0 0 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: pre-wrap;
+  line-height: 1.45;
+}
+
+.feed-item .tag {
+  color: var(--copper);
+}
+
 .toggles {
   display: flex;
   justify-content: space-between;

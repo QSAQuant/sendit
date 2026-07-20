@@ -1,3 +1,4 @@
+import type { SnapBand } from "./illusion";
 import type { HeatLev, PaperTier } from "./products";
 import type { RidgeId } from "./ridges";
 
@@ -25,6 +26,7 @@ export type Actor = {
   /** False after CASH — premium sunk, no claim */
   paperActive: boolean;
   ashApplied: number;
+  snapBand: SnapBand;
 };
 
 const BOT_HANDLES = [
@@ -90,6 +92,11 @@ export function makeBots(count: number, rng: () => number): Actor[] {
     const targetExit =
       1.12 + rng() * (ridge === "spike" ? 7.5 : ridge === "rise" ? 4.2 : 2.4);
     const bet = stakeFromRng(rng);
+    const papers: PaperTier[] = ["off", "off", "half", "half", "full"];
+    const paperTier = papers[Math.floor(rng() * papers.length)];
+    const leverage: HeatLev = rng() < 0.28 ? 2 : 1;
+    const snaps: SnapBand[] = ["off", "off", "off", "dust", "chop", "cook", "moon"];
+    const snapBand = snaps[Math.floor(rng() * snaps.length)];
     bots.push({
       id: `bot-${name}-${i}`,
       name,
@@ -105,10 +112,11 @@ export function makeBots(count: number, rng: () => number): Actor[] {
       targetExit: Math.floor(targetExit * 100) / 100,
       willPeel: rng() < 0.48,
       peelAt: 1.2 + rng() * 2.4,
-      leverage: 1,
-      paperTier: "off",
-      paperActive: false,
+      leverage,
+      paperTier,
+      paperActive: paperTier !== "off",
       ashApplied: 0,
+      snapBand,
     });
   }
   return bots;
@@ -122,6 +130,7 @@ export type YouBetOpts = {
   leverage: HeatLev;
   paperTier: PaperTier;
   ashApplied: number;
+  snapBand: SnapBand;
 };
 
 export function makeYou(opts: YouBetOpts): Actor {
@@ -144,5 +153,6 @@ export function makeYou(opts: YouBetOpts): Actor {
     paperTier: opts.paperTier,
     paperActive: opts.paperTier !== "off",
     ashApplied: opts.ashApplied,
+    snapBand: opts.snapBand,
   };
 }

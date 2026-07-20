@@ -42,8 +42,17 @@
       </header>
 
       <div class="coach" id="coach">
-        <span class="coach-verbs">SEND · PAPER · PEEL · CASH</span>
+        <span class="coach-verbs">SOLVE THE LOADOUT</span>
         <span class="coach-tag">Don't paper.</span>
+      </div>
+
+      <div class="illusion-tabs" id="illusion-tabs">
+        <button type="button" class="itab active" data-panel="play">PLAY</button>
+        <button type="button" class="itab" data-panel="pay">TABLES</button>
+        <button type="button" class="itab" data-panel="myths">MYTHS</button>
+        <button type="button" class="itab" data-panel="tape">TAPE</button>
+        <button type="button" class="itab" data-panel="verify">VERIFY</button>
+        <button type="button" class="itab" data-panel="lab">EV LAB</button>
       </div>
 
       <div class="progress-row">
@@ -75,73 +84,132 @@
         </div>
       </main>
 
-      <section class="ridges">
-        <button type="button" class="ridge" data-ridge="calm">
-          <span class="ridge-name">SLOW</span>
-          <span class="ridge-meta">Grip</span>
-        </button>
-        <button type="button" class="ridge active" data-ridge="rise">
-          <span class="ridge-name">SEND</span>
-          <span class="ridge-meta">Standard</span>
-        </button>
-        <button type="button" class="ridge" data-ridge="spike">
-          <span class="ridge-name">DEGEN</span>
-          <span class="ridge-meta">Savage</span>
-        </button>
+      <section id="panel-play" class="panel-play">
+        <section class="ridges">
+          <button type="button" class="ridge" data-ridge="calm">
+            <span class="ridge-name">SLOW</span>
+            <span class="ridge-meta">Grip</span>
+          </button>
+          <button type="button" class="ridge active" data-ridge="rise">
+            <span class="ridge-name">SEND</span>
+            <span class="ridge-meta">Standard</span>
+          </button>
+          <button type="button" class="ridge" data-ridge="spike">
+            <span class="ridge-name">DEGEN</span>
+            <span class="ridge-meta">Savage</span>
+          </button>
+        </section>
+
+        <section class="controls">
+          <div class="field">
+            <label for="bet">Margin</label>
+            <div class="input-row">
+              <button type="button" data-bet-adj="-1" class="chip">−</button>
+              <input id="bet" type="number" min="1" step="1" value="10" />
+              <button type="button" data-bet-adj="1" class="chip">+</button>
+            </div>
+            <div class="quick">
+              <button type="button" data-bet-set="5">5</button>
+              <button type="button" data-bet-set="10">10</button>
+              <button type="button" data-bet-set="25">25</button>
+              <button type="button" data-bet-set="50">50</button>
+            </div>
+          </div>
+
+          <div class="products">
+            <div class="product-row">
+              <span class="label">PAPER</span>
+              <div class="product-chips" id="paper-chips">
+                <button type="button" class="pchip active" data-paper="off">OFF</button>
+                <button type="button" class="pchip" data-paper="half">HALF</button>
+                <button type="button" class="pchip" data-paper="full">FULL</button>
+              </div>
+            </div>
+            <div class="product-row">
+              <span class="label">HEAT</span>
+              <button type="button" id="heat-btn" class="heat-btn">HEAT 1×</button>
+              <div class="ash-pill">
+                <span class="label">ASH</span>
+                <span id="ash-bal" class="ash-val">0.00</span>
+              </div>
+            </div>
+            <div class="product-row">
+              <span class="label">SNAP</span>
+              <div class="product-chips" id="snap-chips">
+                <button type="button" class="pchip active" data-snap="off">OFF</button>
+                <button type="button" class="pchip" data-snap="dust">DUST</button>
+                <button type="button" class="pchip" data-snap="chop">CHOP</button>
+                <button type="button" class="pchip" data-snap="cook">COOK</button>
+                <button type="button" class="pchip" data-snap="moon">MOON</button>
+              </div>
+            </div>
+            <div class="product-row" id="snap-stake-row" hidden>
+              <span class="label">SNAP $</span>
+              <input id="snap-stake" type="number" min="1" step="1" value="2" class="snap-input" />
+            </div>
+            <p id="quote" class="quote">Ride 10 · cost 10</p>
+            <p id="loadout-code" class="loadout-code">SI-R1-PO-M10-SX0</p>
+          </div>
+
+          <div class="toggles">
+            <label class="toggle">
+              <input id="auto" type="checkbox" />
+              <span>Auto-send every fuse</span>
+            </label>
+            <button id="mute" type="button" class="mute">SFX ON</button>
+          </div>
+
+          <div class="actions sticky-actions">
+            <button id="primary" type="button" class="btn primary">SEND</button>
+            <button id="peel" type="button" class="btn ghost" disabled>PEEL 50%</button>
+            <button id="cashout" type="button" class="btn ghost" disabled>CASH</button>
+          </div>
+          <p class="controls-help">
+            Loadout = lane + PAPER + HEAT + SNAP. Degens argue. House tables stay +EV.
+          </p>
+        </section>
       </section>
 
-      <section class="controls">
-        <div class="field">
-          <label for="bet">Margin</label>
-          <div class="input-row">
-            <button type="button" data-bet-adj="-1" class="chip">−</button>
-            <input id="bet" type="number" min="1" step="1" value="10" />
-            <button type="button" data-bet-adj="1" class="chip">+</button>
-          </div>
-          <div class="quick">
-            <button type="button" data-bet-set="5">5</button>
-            <button type="button" data-bet-set="10">10</button>
-            <button type="button" data-bet-set="25">25</button>
-            <button type="button" data-bet-set="50">50</button>
-          </div>
-        </div>
-
-        <div class="products">
-          <div class="product-row">
-            <span class="label">PAPER</span>
-            <div class="product-chips" id="paper-chips">
-              <button type="button" class="pchip active" data-paper="off">OFF</button>
-              <button type="button" class="pchip" data-paper="half">HALF</button>
-              <button type="button" class="pchip" data-paper="full">FULL</button>
-            </div>
-          </div>
-          <div class="product-row">
-            <span class="label">HEAT</span>
-            <button type="button" id="heat-btn" class="heat-btn">HEAT 1×</button>
-            <div class="ash-pill">
-              <span class="label">ASH</span>
-              <span id="ash-bal" class="ash-val">0.00</span>
-            </div>
-          </div>
-          <p id="quote" class="quote">Ride 10 · cost 10</p>
-        </div>
-
-        <div class="toggles">
-          <label class="toggle">
-            <input id="auto" type="checkbox" />
-            <span>Auto-send every fuse</span>
-          </label>
-          <button id="mute" type="button" class="mute">SFX ON</button>
-        </div>
-
-        <div class="actions sticky-actions">
-          <button id="primary" type="button" class="btn primary">SEND</button>
-          <button id="peel" type="button" class="btn ghost" disabled>PEEL 50%</button>
-          <button id="cashout" type="button" class="btn ghost" disabled>CASH</button>
-        </div>
-        <p class="controls-help">
-          PAPER covers snap on notional · HEAT 2× fees extra exposure · ASH = 10% margin back next fuse only · CASH voids PAPER
+      <section id="panel-pay" class="drawer" hidden>
+        <h3 class="drawer-title">PAYTABLE — clipboard bait</h3>
+        <p class="drawer-lead">
+          Fair π = α · P(bust) if you hold to target T. Sold π is higher. The gap is the vig.
         </p>
+        <div id="pay-body" class="drawer-body"></div>
+      </section>
+
+      <section id="panel-myths" class="drawer" hidden>
+        <h3 class="drawer-title">COMMUNITY SYSTEMS</h3>
+        <p class="drawer-lead">Named loadouts degens swear by. Pick one. Argue in the feed.</p>
+        <div id="myths-body" class="drawer-body"></div>
+      </section>
+
+      <section id="panel-tape" class="drawer" hidden>
+        <h3 class="drawer-title">TAPE HEATMAP</h3>
+        <p class="drawer-lead">Rolling snap bands. Pattern hunters welcome. Independence still holds.</p>
+        <div id="tape-body" class="drawer-body"></div>
+      </section>
+
+      <section id="panel-verify" class="drawer" hidden>
+        <h3 class="drawer-title">VERIFY</h3>
+        <p class="drawer-lead">Recompute crash from seed. Auditor ego enabled.</p>
+        <div id="verify-body" class="drawer-body"></div>
+      </section>
+
+      <section id="panel-lab" class="drawer" hidden>
+        <h3 class="drawer-title">EV LAB</h3>
+        <p class="drawer-lead">Sandbox napkin math. No money moves here.</p>
+        <div class="lab-grid">
+          <label>Target T <input id="lab-t" type="number" min="1.1" step="0.1" value="2" /></label>
+          <label
+            >Code
+            <input id="lab-code" type="text" placeholder="SI-R2-PH-M10-SK2" />
+          </label>
+          <button type="button" id="lab-apply" class="btn ghost">APPLY CODE</button>
+          <button type="button" id="lab-run" class="btn primary">RUN NAPKIN</button>
+        </div>
+        <pre id="lab-out" class="lab-out">Set loadout on PLAY, then RUN.</pre>
+        <button type="button" id="lab-copy" class="btn ghost">COPY LOADOUT CODE</button>
       </section>
 
       <footer class="meta">

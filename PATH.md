@@ -17,10 +17,8 @@ Always-on social crash: pack rides the fuse, peel 50%, streak/heat/XP retention.
 One-liner: *Not another plane — SENDIT.*
 
 ## Differentiation lock (SHIPPED in demo)
-Hero: **PAPER** (priced on notional) + **ASH** (10% margin lost → next fuse) + **HEAT 2×** (3% fee on extra exposure).
-PEEL kept. SNAP BET still backlog.
-VFX supports identity; it is not the wedge.
-Math: `docs/math.md` · Stress test canvas: `sendit-differentiation-stress-test.canvas.tsx`
+Hero: **PAPER** + **ASH** + **HEAT 2×** + **SNAP BET** + **illusion kit** (tables / myths / tape / verify / EV lab).
+Math: `docs/math.md` · Illusion: `docs/illusion.md`
 Pitch: publishers = PAPER-forward (`outreach/emails.md`); crypto = HEAT-forward (`outreach/crypto-anchor.md`)
 
 ## Distribution
