@@ -60,6 +60,8 @@ let ridge: RidgeId = "rise";
 let room: Room = createRoom();
 let dopa: DopamineState = createDopamine();
 let lockedIn = false;
+/** Queued for next countdown if player hits SEND mid-round */
+let pendingSend = false;
 let lastTickBeep = 0;
 let lastMilestone = 1;
 let lastHeld: number | null = null;
@@ -141,57 +143,76 @@ function paintHud(now: number) {
   }
 
   const riding = !!youRiding(room);
+  const stakeLocked = lockedIn || pendingSend;
 
   if (room.phase === "countdown") {
     const sec = Math.ceil(Math.max(0, room.countdownEnds - now) / 1000);
     statusEl.textContent = lockedIn ? "SENT · WAITING" : "NEXT FUSE";
     hintEl.textContent = lockedIn
       ? `${RIDGES[ridge].label} lane · ${sec}s`
-      : `Don't paper. Fuse in ${sec}s.`;
+      : `Tap SEND now · fuse in ${sec}s`;
     primaryBtn.textContent = lockedIn ? "SENT" : "SEND";
-    primaryBtn.classList.toggle("armed", lockedIn);
+    primaryBtn.classList.toggle("armed", lockedIn || pendingSend);
     primaryBtn.disabled = lockedIn;
     peelBtn.disabled = true;
     cashoutBtn.disabled = true;
     crashAtEl.textContent = "—";
-    setInputs(false);
   } else if (room.phase === "flying") {
     statusEl.textContent = riding ? "HOLDING" : "WATCHING";
     hintEl.textContent = riding
-      ? "Peel half. Or send it. Pack is watching."
-      : "Watch the pack · send next fuse";
-    primaryBtn.textContent = "LIVE";
-    primaryBtn.disabled = true;
+      ? "PEEL banks half · CASH exits"
+      : pendingSend
+        ? "Queued for next fuse"
+        : "Tap SEND to join the next fuse";
+    primaryBtn.textContent = riding ? "LIVE" : pendingSend ? "QUEUED" : "SEND NEXT";
+    primaryBtn.classList.toggle("armed", pendingSend);
+    primaryBtn.disabled = riding || pendingSend;
     peelBtn.disabled = !riding;
     cashoutBtn.disabled = !riding;
     peelBtn.classList.toggle("peel-live", riding);
     cashoutBtn.classList.toggle("live", riding);
     crashAtEl.textContent = "live";
-    setInputs(true);
   } else {
     statusEl.textContent = "SNAPPED";
-    hintEl.textContent = `Snap @ ${room.crashAt.toFixed(2)}× · run it back`;
-    primaryBtn.textContent = "…";
-    primaryBtn.disabled = true;
+    hintEl.textContent = pendingSend
+      ? `Snap @ ${room.crashAt.toFixed(2)}× · you're queued`
+      : `Snap @ ${room.crashAt.toFixed(2)}× · tap SEND for next`;
+    primaryBtn.textContent = pendingSend ? "QUEUED" : "SEND NEXT";
+    primaryBtn.classList.toggle("armed", pendingSend);
+    primaryBtn.disabled = pendingSend;
     peelBtn.disabled = true;
     cashoutBtn.disabled = true;
     crashAtEl.textContent = `${room.crashAt.toFixed(2)}×`;
-    setInputs(true);
   }
-}
 
-function setInputs(disabled: boolean) {
-  betInput.disabled = disabled && lockedIn;
-  document.querySelectorAll<HTMLButtonElement>(".ridge, [data-bet-adj], [data-bet-set]").forEach((b) => {
-    b.disabled = room.phase !== "countdown" || lockedIn;
-  });
+  betInput.disabled = stakeLocked;
+  document
+    .querySelectorAll<HTMLButtonElement>(".ridge, [data-bet-adj], [data-bet-set]")
+    .forEach((b) => {
+      b.disabled = stakeLocked;
+    });
 }
 
 function tryLock() {
-  if (room.phase !== "countdown" || lockedIn) return;
+  if (lockedIn) return;
+
+  // Mid-round: queue for the next countdown instead of feeling broken
+  if (room.phase !== "countdown") {
+    if (pendingSend || youRiding(room)) return;
+    const bet = readBet();
+    if (bet > balance) {
+      toast(dopa, "NEED MORE BANK", performance.now());
+      return;
+    }
+    pendingSend = true;
+    sfx.bet();
+    toast(dopa, "QUEUED · NEXT FUSE", performance.now(), 900);
+    pushFeed(`you queued ${bet} on ${RIDGES[ridge].label}`, "peel");
+    return;
+  }
+
   const bet = readBet();
   if (bet > balance) {
-    dopa = { ...dopa };
     toast(dopa, "NEED MORE BANK", performance.now());
     return;
   }
@@ -200,6 +221,7 @@ function tryLock() {
   balance -= bet;
   room = next;
   lockedIn = true;
+  pendingSend = false;
   lastHeld = null;
   sfx.bet();
   renderer.pulse("bet");
@@ -251,9 +273,8 @@ function onRoundCrash(at: number, now: number) {
 }
 
 function maybeAutobuy() {
-  if (!autoInput.checked) return;
   if (room.phase !== "countdown" || lockedIn) return;
-  tryLock();
+  if (autoInput.checked || pendingSend) tryLock();
 }
 
 function announcePackJoins() {

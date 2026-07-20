@@ -36,8 +36,8 @@ export type Room = {
   round: number;
 };
 
-const COUNTDOWN_MS = 2200;
-const CRASH_HOLD_MS = 1100;
+const COUNTDOWN_MS = 5200;
+const CRASH_HOLD_MS = 1400;
 
 function hashNoise(id: string, mult: number): number {
   let h = Math.floor(mult * 100);

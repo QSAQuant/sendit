@@ -5,7 +5,7 @@
 | Local | http://localhost:5173 |
 | **Public** | **https://qsaquant.github.io/sendit/** |
 | Repo | https://github.com/QSAQuant/sendit |
-| Peel clip | https://qsaquant.github.io/sendit/lobby/peel-clip.svg |
+| Peel clip (silent loop asset, not the game) | https://qsaquant.github.io/sendit/lobby/peel-clip.svg |
 | Icon | https://qsaquant.github.io/sendit/icon-64.svg |
 | Redeploy | See `docs/deploy.md` |
 
