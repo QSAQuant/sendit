@@ -28,4 +28,5 @@ Demo: https://qsaquant.github.io/sendit/
 4. Attach math one-pager + roadmap slide
 
 ## Change log
+- 2026-07-20 — Fixed peel-clip encoding error; lengthened countdown; SEND queues next fuse
 - 2026-07-20 — Tasks 1–9 executed; public Pages URL live; tracker created
