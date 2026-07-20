@@ -3,24 +3,24 @@
 **Product:** Always-on social crash (burning fuse — not a plane)  
 **Tagline:** Don't paper. · Peel half. Chase more.
 
-## Edge by lane
+## Core lanes
 | Lane | Edge | Instant 1.00× | Pitch RTP |
 |------|------|---------------|-----------|
 | SLOW | 3% | 1.5% | ~97% |
 | SEND | 4% | 3% | ~96% |
 | DEGEN | 5% | 5% | ~95% |
 
+## Side products (fixed tables — separate from crash RNG)
+| Product | Rule | House note |
+|---------|------|------------|
+| **PAPER** HALF/FULL | Premium on **notional**; snap while holding → α refund; CASH voids | Second GGR on fear |
+| **ASH** | 10% of **margin lost** → next-fuse-only fuel | Session extender |
+| **HEAT 2×** | Optional; 3% fee on extra exposure | Soft-pedal for regulated pubs; crypto-forward |
+
 ## Crash formula (demo)
-`crash = max(1.00, floor(((1−e)/(1−u))·100)/100)` with seeded `u`, plus lane instant-bust branch.
+`crash = max(1.00, floor(((1−e)/(1−u))·100)/100)` + instant-bust branch.
 
 ## Provable display (demo)
-- Pre-round commitment hash in HUD  
-- Seed revealed on snap  
-- Production: move to publisher RGS + lab cert (we ride your pipe)
-
-## Why operators care
-- Instant session throughput  
-- PEEL 50% = partial cashout as a verb (retention + clip moments)  
-- Social pack feed without dead lobby between rounds  
+Pre-round hash · seed on snap · production → publisher RGS + lab cert.
 
 Full write-up: `docs/math.md`

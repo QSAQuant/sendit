@@ -16,8 +16,20 @@ ASCENT sounded like SaaS. Acid lime looked like every crypto casino.
 Always-on social crash: pack rides the fuse, peel 50%, streak/heat/XP retention.
 One-liner: *Not another plane — SENDIT.*
 
+## Differentiation lock (SHIPPED in demo)
+Hero: **PAPER** (priced on notional) + **ASH** (10% margin lost → next fuse) + **HEAT 2×** (3% fee on extra exposure).
+PEEL kept. SNAP BET still backlog.
+VFX supports identity; it is not the wedge.
+Math: `docs/math.md` · Stress test canvas: `sendit-differentiation-stress-test.canvas.tsx`
+Pitch: publishers = PAPER-forward (`outreach/emails.md`); crypto = HEAT-forward (`outreach/crypto-anchor.md`)
+
 ## Distribution
 Silver Bullet → BGaming Publishing → OpenRGS
+
+## Money plan (critical)
+Publisher-first remains primary. Optional parallel: 1 crypto/Telegram anchor for traction.
+Do **not**: DIY SoftSwiss day-1, Docker-as-GTM, race to 3% GGR, cert spend before a yes.
+Full autopsy + phased plan: canvas `gemini-advice-critical-money-plan.canvas.tsx`
 
 ## Ops docs (do not lose)
 - Task tracker: `TRACKER.md`

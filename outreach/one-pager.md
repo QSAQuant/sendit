@@ -6,25 +6,27 @@
 **Ask:** Silver Bullet / BGaming Publishing / OpenRGS
 
 ## Aggregator one-liner
-SENDIT is an always-on social crash where the pack rides a burning fuse — peel half, send the rest, don't paper. Streak heat + XP keep sessions hot. Not another Aviator skin.
+SENDIT is an always-on social crash where the pack rides a burning fuse — peel half, buy PAPER cover, don't paper. Not another Aviator skin.
 
 ## Why lobbies don't already have this
 | Ours | vs field |
 |---|---|
-| SENDIT name + Don't paper. | Verb brand |
-| Burning fuse animation | Planes/rockets are owned |
-| SLOW / SEND / DEGEN lanes | Named risk paths |
-| PEEL 50% | Partial cashout as a verb |
-| Streak / heat / XP / king | Retention layer |
-| Always-on fuse drops | No dead lobby |
-| Skin #2 (PAPERHANDS) on same engine | Not a one-SKU hobby |
+| SENDIT + Don't paper. | Verb brand |
+| Burning fuse | Planes/rockets owned |
+| **PAPER** priced bust cover | Insurance as a product |
+| PEEL 50% | Partial cashout verb |
+| **ASH** next-fuse fuel | Soft landing → more rounds |
+| SLOW / SEND / DEGEN | Named risk paths |
+| Skin #2 PAPERHANDS | Not a one-SKU hobby |
+
+*(HEAT 2× ships in demo for crypto/TG anchors — see `outreach/crypto-anchor.md`. Soft-pedal with regulated publishers.)*
 
 ## Demo
-See `DEMO.md` · Space = SEND/CASH · P = PEEL · Auto-send for BD flow  
-Fairness: hash pre-round · seed on snap
+https://qsaquant.github.io/sendit/  
+SEND / PAPER / HEAT / PEEL / CASH · hash pre-round · seed on snap
 
 ## Math
-See `outreach/math-one-pager.md` (SLOW/SEND/DEGEN edges 3/4/5%)
+`outreach/math-one-pager.md` · full `docs/math.md`
 
 ## Contact
-See `CONTACT.md` — fill before send.
+`CONTACT.md` — fill before send.

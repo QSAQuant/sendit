@@ -4,15 +4,16 @@ Fill `CONTACT.md` first. Replace `[NAME]`, `[TG]`.
 
 Default demo URL: **https://qsaquant.github.io/sendit/**
 
-Attach or paste: `outreach/math-one-pager.md` + `outreach/roadmap-slide.md`
+Attach: `outreach/math-one-pager.md` + `outreach/roadmap-slide.md`  
+**Do not lead with HEAT 2×** on publisher emails (RG optics). HEAT lives in `outreach/crypto-anchor.md`.
 
 ---
 
 ## 1) Relax — Silver Bullet
 
-Subject: SENDIT — social crash demo for Silver Bullet
+Subject: SENDIT — social crash with PAPER cover for Silver Bullet
 
-Hi — we’re shipping **SENDIT**, an always-on social crash (burning fuse, not another plane) with PEEL 50%, SLOW/SEND/DEGEN lanes, and pack heat. Playable public demo ready.
+Hi — we’re shipping **SENDIT**, an always-on social crash (burning fuse, not another plane) with PEEL 50% and **PAPER** (priced bust cover). Playable public demo ready.
 
 Looking for Silver Bullet commercial representation (not DIY aggregation). Happy to do a 15-min call and play live.
 
@@ -26,11 +27,11 @@ Thanks,
 
 ## 2) BGaming Publishing
 
-Subject: SENDIT — crash title for BGaming Publishing
+Subject: SENDIT — crash + PAPER mechanics for BGaming Publishing
 
 Hi Publishing team —
 
-**SENDIT** is a social crash built for mobile session throughput + streamer clips (fuse object, peel half, don’t paper). We want to publish through your operator network rather than integrate aggregators ourselves.
+**SENDIT** is a social crash built for mobile session throughput + streamer clips (fuse object, peel half, priced PAPER cover). We want to publish through your operator network rather than integrate aggregators ourselves.
 
 Demo: https://qsaquant.github.io/sendit/  
 Target: first live title under your pipe ASAP; skin #2 (PAPERHANDS) from the same engine.
@@ -43,9 +44,9 @@ Target: first live title under your pipe ASAP; skin #2 (PAPERHANDS) from the sam
 
 Subject: OpenRGS — SENDIT crash client ready for sandbox
 
-Hi — requesting OpenRGS sandbox access for **SENDIT** (HTML5 always-on crash + PEEL 50% + lane edges). We want to ship on your RGS/distribution rather than build our own stack.
+Hi — requesting OpenRGS sandbox access for **SENDIT** (HTML5 always-on crash + PEEL 50% + PAPER side cover + lane edges). We want to ship on your RGS/distribution rather than build our own stack.
 
 Demo: https://qsaquant.github.io/sendit/  
-Math: SLOW/SEND/DEGEN house edges 3/4/5% (demo model; production on your cert).
+Math: SLOW/SEND/DEGEN edges 3/4/5% + PAPER/ASH tables (demo model; production on your cert).
 
 [NAME] · [TG]

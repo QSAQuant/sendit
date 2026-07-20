@@ -432,6 +432,78 @@ input[type="number"] {
   font-size: 13px;
 }
 
+.products {
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 90%, black);
+}
+
+.product-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.product-chips {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+
+.pchip,
+.heat-btn {
+  border: 1px solid var(--line);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 8px 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.pchip.active {
+  border-color: var(--copper);
+  color: var(--copper);
+  background: color-mix(in srgb, var(--copper) 14%, var(--ink));
+}
+
+.heat-btn.on {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 14%, var(--ink));
+}
+
+.ash-pill {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.ash-val {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.quote {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fog);
+  line-height: 1.35;
+}
+
 .toggles {
   display: flex;
   justify-content: space-between;

@@ -1,4 +1,4 @@
-import { makeBots, makeYou, type Actor } from "./actors";
+import { makeBots, makeYou, type Actor, type YouBetOpts } from "./actors";
 import {
   generateCrashPoint,
   hashSeed,
@@ -82,16 +82,11 @@ function growth(room: Room): number {
   return RIDGES[room.ridgeFocus].growth;
 }
 
-export function placeBet(
-  room: Room,
-  ridge: RidgeId,
-  bet: number,
-  playerName: string,
-): Room | null {
+export function placeBet(room: Room, opts: YouBetOpts): Room | null {
   if (room.phase !== "countdown") return null;
   const others = room.actors.filter((a) => !a.you);
-  const you = makeYou(playerName, ridge, bet);
-  return { ...room, actors: [...others, you], ridgeFocus: ridge };
+  const you = makeYou(opts);
+  return { ...room, actors: [...others, you], ridgeFocus: opts.ridge };
 }
 
 export function clearYou(room: Room): Room {
@@ -105,7 +100,8 @@ function armBots(room: Room, rng: () => number): Actor[] {
         return {
           ...a,
           status: "riding" as const,
-          remaining: a.bet,
+          // You already carry notional in remaining; bots ride face bet
+          remaining: a.you ? a.remaining : a.bet,
           locked: 0,
           exitAt: null,
         };
@@ -327,6 +323,8 @@ export function cashYou(
     remaining: 0,
     locked: 0,
     exitAt: room.multiplier,
+    // Cashing voids PAPER — premium already sunk
+    paperActive: false,
   };
   return { room: { ...room, actors }, payout, at: room.multiplier };
 }

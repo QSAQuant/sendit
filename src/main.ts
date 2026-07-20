@@ -9,6 +9,13 @@ import {
   type DopamineState,
 } from "./game/dopamine";
 import { LiveNet } from "./game/net";
+import {
+  PAPER_TIERS,
+  quoteSend,
+  settleBust,
+  type HeatLev,
+  type PaperTier,
+} from "./game/products";
 import { SurgeRenderer } from "./game/render";
 import type { RidgeId } from "./game/ridges";
 import { RIDGES } from "./game/ridges";
@@ -47,6 +54,9 @@ const primaryBtn = el<HTMLButtonElement>("#primary");
 const peelBtn = el<HTMLButtonElement>("#peel");
 const cashoutBtn = el<HTMLButtonElement>("#cashout");
 const muteBtn = el<HTMLButtonElement>("#mute");
+const heatBtn = el<HTMLButtonElement>("#heat-btn");
+const ashBalEl = el("#ash-bal");
+const quoteEl = el("#quote");
 const canvas = el<HTMLCanvasElement>("#canvas");
 const app = el("#app");
 
@@ -56,11 +66,15 @@ const net = new LiveNet(PLAYER);
 const renderer = new SurgeRenderer(canvas);
 
 let balance = 1000;
+/** Next-fuse-only fuel — from margin lost on bust */
+let ashBalance = 0;
+let ashExpiresRound = 0;
 let ridge: RidgeId = "rise";
+let paperTier: PaperTier = "off";
+let heatLev: HeatLev = 1;
 let room: Room = createRoom();
 let dopa: DopamineState = createDopamine();
 let lockedIn = false;
-/** Queued for next countdown if player hits SEND mid-round */
 let pendingSend = false;
 let lastTickBeep = 0;
 let lastMilestone = 1;
@@ -80,9 +94,26 @@ function money(n: number) {
   });
 }
 
-function readBet() {
+function readMargin() {
   const v = Number(betInput.value);
   return Number.isFinite(v) && v >= 1 ? Math.floor(v) : 1;
+}
+
+function currentQuote() {
+  expireAshIfNeeded();
+  return quoteSend({
+    margin: readMargin(),
+    lev: heatLev,
+    paperTier,
+    ashAvailable: ashBalance,
+  });
+}
+
+function expireAshIfNeeded() {
+  if (ashBalance > 0 && room.round > ashExpiresRound) {
+    pushFeed(`ash expired ${money(ashBalance)}`, "bust");
+    ashBalance = 0;
+  }
 }
 
 function pushFeed(text: string, kind: string) {
@@ -99,6 +130,22 @@ function paintRidges() {
   });
 }
 
+function paintProducts() {
+  document.querySelectorAll<HTMLButtonElement>("[data-paper]").forEach((b) => {
+    b.classList.toggle("active", b.dataset.paper === paperTier);
+  });
+  heatBtn.textContent = heatLev === 2 ? "HEAT 2×" : "HEAT 1×";
+  heatBtn.classList.toggle("on", heatLev === 2);
+  ashBalEl.textContent = money(ashBalance);
+  const q = currentQuote();
+  const bits = [`Ride ${q.notional}`];
+  if (q.heatFee > 0) bits.push(`heat fee ${q.heatFee}`);
+  if (q.paperPremium > 0) bits.push(`paper ${q.paperPremium}`);
+  if (q.ashApplied > 0) bits.push(`ash −${q.ashApplied}`);
+  bits.push(`cash ${q.cashRequired}`);
+  quoteEl.textContent = bits.join(" · ");
+}
+
 function paintDopa(now: number) {
   levelEl.textContent = `LVL ${dopa.level}`;
   streakEl.textContent = `${dopa.streak} STREAK`;
@@ -108,7 +155,7 @@ function paintDopa(now: number) {
     dopa.kingMult > 0
       ? `${dopa.kingName} ${dopa.kingMult.toFixed(2)}×`
       : "—";
-  app.classList.toggle("hot", dopa.heat > 55 || dopa.streak >= 3);
+  app.classList.toggle("hot", dopa.heat > 55 || dopa.streak >= 3 || heatLev === 2);
 
   if (dopa.lastToast && now < dopa.toastUntil) {
     toastEl.hidden = false;
@@ -119,6 +166,7 @@ function paintDopa(now: number) {
 }
 
 function paintHud(now: number) {
+  expireAshIfNeeded();
   balanceEl.textContent = money(balance);
   onlineEl.textContent = String(room.online + net.peerCount());
   roundEl.textContent = String(room.round);
@@ -126,6 +174,7 @@ function paintHud(now: number) {
   multEl.classList.toggle("hot", room.phase === "flying" && room.multiplier >= 2);
   multEl.classList.toggle("dead", room.phase === "crashed");
   paintRidges();
+  paintProducts();
   paintDopa(now);
 
   historyEl.textContent = room.history.length
@@ -148,9 +197,12 @@ function paintHud(now: number) {
   if (room.phase === "countdown") {
     const sec = Math.ceil(Math.max(0, room.countdownEnds - now) / 1000);
     statusEl.textContent = lockedIn ? "SENT · WAITING" : "NEXT FUSE";
+    const you = room.actors.find((a) => a.you);
     hintEl.textContent = lockedIn
-      ? `${RIDGES[ridge].label} lane · ${sec}s`
-      : `Tap SEND now · fuse in ${sec}s`;
+      ? `${RIDGES[ridge].label}${you?.leverage === 2 ? " HEAT2" : ""} · ${sec}s`
+      : ashBalance > 0
+        ? `ASH ready · fuse in ${sec}s`
+        : `Tap SEND · fuse in ${sec}s`;
     primaryBtn.textContent = lockedIn ? "SENT" : "SEND";
     primaryBtn.classList.toggle("armed", lockedIn || pendingSend);
     primaryBtn.disabled = lockedIn;
@@ -158,9 +210,12 @@ function paintHud(now: number) {
     cashoutBtn.disabled = true;
     crashAtEl.textContent = "—";
   } else if (room.phase === "flying") {
+    const you = youRiding(room);
     statusEl.textContent = riding ? "HOLDING" : "WATCHING";
     hintEl.textContent = riding
-      ? "PEEL banks half · CASH exits"
+      ? you?.paperActive
+        ? `PAPER ${PAPER_TIERS[you.paperTier].label} live · PEEL / CASH`
+        : "PEEL banks half · CASH voids PAPER"
       : pendingSend
         ? "Queued for next fuse"
         : "Tap SEND to join the next fuse";
@@ -175,8 +230,8 @@ function paintHud(now: number) {
   } else {
     statusEl.textContent = "SNAPPED";
     hintEl.textContent = pendingSend
-      ? `Snap @ ${room.crashAt.toFixed(2)}× · you're queued`
-      : `Snap @ ${room.crashAt.toFixed(2)}× · tap SEND for next`;
+      ? `Snap @ ${room.crashAt.toFixed(2)}× · queued`
+      : `Snap @ ${room.crashAt.toFixed(2)}× · SEND next`;
     primaryBtn.textContent = pendingSend ? "QUEUED" : "SEND NEXT";
     primaryBtn.classList.toggle("armed", pendingSend);
     primaryBtn.disabled = pendingSend;
@@ -186,8 +241,11 @@ function paintHud(now: number) {
   }
 
   betInput.disabled = stakeLocked;
+  heatBtn.disabled = stakeLocked;
   document
-    .querySelectorAll<HTMLButtonElement>(".ridge, [data-bet-adj], [data-bet-set]")
+    .querySelectorAll<HTMLButtonElement>(
+      ".ridge, [data-bet-adj], [data-bet-set], [data-paper]",
+    )
     .forEach((b) => {
       b.disabled = stakeLocked;
     });
@@ -196,37 +254,60 @@ function paintHud(now: number) {
 function tryLock() {
   if (lockedIn) return;
 
-  // Mid-round: queue for the next countdown instead of feeling broken
   if (room.phase !== "countdown") {
     if (pendingSend || youRiding(room)) return;
-    const bet = readBet();
-    if (bet > balance) {
+    const q = currentQuote();
+    if (q.cashRequired > balance) {
       toast(dopa, "NEED MORE BANK", performance.now());
       return;
     }
     pendingSend = true;
     sfx.bet();
     toast(dopa, "QUEUED · NEXT FUSE", performance.now(), 900);
-    pushFeed(`you queued ${bet} on ${RIDGES[ridge].label}`, "peel");
+    pushFeed(`queued ${q.notional} N · M${q.margin}`, "peel");
     return;
   }
 
-  const bet = readBet();
-  if (bet > balance) {
+  const q = currentQuote();
+  if (q.cashRequired > balance) {
     toast(dopa, "NEED MORE BANK", performance.now());
     return;
   }
-  const next = placeBet(room, ridge, bet, PLAYER);
+
+  const next = placeBet(room, {
+    name: PLAYER,
+    ridge,
+    margin: q.margin,
+    notional: q.notional,
+    leverage: q.lev,
+    paperTier: q.paperTier,
+    ashApplied: q.ashApplied,
+  });
   if (!next) return;
-  balance -= bet;
+
+  balance = Math.floor((balance - q.cashRequired) * 100) / 100;
+  ashBalance = Math.floor((ashBalance - q.ashApplied) * 100) / 100;
   room = next;
   lockedIn = true;
   pendingSend = false;
   lastHeld = null;
   sfx.bet();
   renderer.pulse("bet");
-  net.send({ type: "bet", id: net.selfId, name: PLAYER, ridge, bet });
-  pushFeed(`you sent ${bet} on ${RIDGES[ridge].label}`, "peel");
+  net.send({ type: "bet", id: net.selfId, name: PLAYER, ridge, bet: q.margin });
+
+  const tags = [
+    `sent M${q.margin}`,
+    q.lev === 2 ? "HEAT2" : null,
+    q.paperTier !== "off" ? `PAPER ${PAPER_TIERS[q.paperTier].label}` : null,
+    q.ashApplied > 0 ? `ash ${q.ashApplied}` : null,
+  ].filter(Boolean);
+  pushFeed(tags.join(" · "), "peel");
+  toast(
+    dopa,
+    q.lev === 2 ? "HEAT 2× SENT" : "SENT",
+    performance.now(),
+    800,
+  );
 }
 
 function doPeel() {
@@ -262,11 +343,26 @@ function onRoundCrash(at: number, now: number) {
   sfx.crash();
   renderer.pulse("crash");
   const riding = youRiding(room);
-  // If still riding at crash, you lost remaining (locked already banked)
   if (riding) {
+    const settle = settleBust({
+      remainingNotional: riding.remaining,
+      lev: riding.leverage,
+      paperTier: riding.paperTier,
+      paperActive: riding.paperActive,
+    });
+    if (settle.paperPay > 0) {
+      balance = Math.floor((balance + settle.paperPay) * 100) / 100;
+      pushFeed(`PAPER paid ${money(settle.paperPay)}`, "cash");
+      toast(dopa, `PAPER +${money(settle.paperPay)}`, now, 1100);
+    }
+    if (settle.ashCredit > 0) {
+      ashBalance = Math.floor((ashBalance + settle.ashCredit) * 100) / 100;
+      ashExpiresRound = room.round + 1;
+      pushFeed(`ASH +${money(settle.ashCredit)} · next fuse`, "peel");
+    }
     dopa = onLoss(dopa, at, lastHeld, now);
     if (dopa.nearMiss) sfx.nearMiss();
-    pushFeed(`you snapped @ ${at.toFixed(2)}×`, "bust");
+    pushFeed(`snapped @ ${at.toFixed(2)}× · M lost ${money(settle.marginLost)}`, "bust");
   }
   lockedIn = false;
   room = clearYou(room);
@@ -287,9 +383,11 @@ function announcePackJoins() {
 }
 
 net.onMessage = (m) => {
-    if (m.type === "bet") pushFeed(`${m.name} sent on ${m.ridge}`, "peel");
-  if (m.type === "cash") pushFeed(`${m.id.slice(0, 4)} out @ ${m.at.toFixed(2)}×`, "cash");
-  if (m.type === "peel") pushFeed(`${m.id.slice(0, 4)} peeled @ ${m.at.toFixed(2)}×`, "peel");
+  if (m.type === "bet") pushFeed(`${m.name} sent on ${m.ridge}`, "peel");
+  if (m.type === "cash")
+    pushFeed(`${m.id.slice(0, 4)} out @ ${m.at.toFixed(2)}×`, "cash");
+  if (m.type === "peel")
+    pushFeed(`${m.id.slice(0, 4)} peeled @ ${m.at.toFixed(2)}×`, "peel");
 };
 
 let prevPhase = room.phase;
@@ -299,7 +397,10 @@ function frame(now: number) {
   room = next;
 
   for (const ev of events) {
-    if (ev.type === "countdown" && Math.floor(ev.t / 1000) !== Math.floor((ev.t + 16) / 1000)) {
+    if (
+      ev.type === "countdown" &&
+      Math.floor(ev.t / 1000) !== Math.floor((ev.t + 16) / 1000)
+    ) {
       if (ev.t < 3000) sfx.countdown();
     }
     if (ev.type === "fly") {
@@ -338,9 +439,6 @@ function frame(now: number) {
         toast(dopa, `KING ${ev.actor.name} ${ev.at.toFixed(2)}×`, now);
       }
     }
-    if (ev.type === "actor_bust" && !ev.actor.you) {
-      // sparse bust spam
-    }
     if (ev.type === "crash") {
       onRoundCrash(ev.at, now);
     }
@@ -348,6 +446,7 @@ function frame(now: number) {
       lastTickBeep = 0;
       lastMilestone = 1;
       lastHeld = null;
+      expireAshIfNeeded();
       announcePackJoins();
       maybeAutobuy();
     }
@@ -380,6 +479,19 @@ cashoutBtn.addEventListener("click", doCash);
 muteBtn.addEventListener("click", () => {
   muteBtn.textContent = sfx.toggleMute() ? "SFX OFF" : "SFX ON";
 });
+heatBtn.addEventListener("click", () => {
+  if (lockedIn || pendingSend) return;
+  heatLev = heatLev === 1 ? 2 : 1;
+  paintProducts();
+});
+
+document.querySelectorAll<HTMLButtonElement>("[data-paper]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    if (lockedIn || pendingSend) return;
+    paperTier = (btn.dataset.paper as PaperTier) ?? "off";
+    paintProducts();
+  });
+});
 
 document.querySelectorAll<HTMLButtonElement>(".ridge").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -391,15 +503,21 @@ document.querySelectorAll<HTMLButtonElement>(".ridge").forEach((btn) => {
 document.querySelectorAll<HTMLButtonElement>("[data-bet-adj]").forEach((btn) => {
   btn.addEventListener("click", () => {
     const adj = Number(btn.dataset.betAdj);
-    betInput.value = String(Math.max(1, readBet() + adj * (readBet() >= 25 ? 5 : 1)));
+    betInput.value = String(
+      Math.max(1, readMargin() + adj * (readMargin() >= 25 ? 5 : 1)),
+    );
+    paintProducts();
   });
 });
 
 document.querySelectorAll<HTMLButtonElement>("[data-bet-set]").forEach((btn) => {
   btn.addEventListener("click", () => {
     betInput.value = btn.dataset.betSet ?? "10";
+    paintProducts();
   });
 });
+
+betInput.addEventListener("input", () => paintProducts());
 
 window.addEventListener("resize", () => renderer.resize(canvas));
 window.addEventListener("keydown", (e) => {
@@ -409,13 +527,18 @@ window.addEventListener("keydown", (e) => {
     else tryLock();
   }
   if (e.code === "KeyP") doPeel();
+  if (e.code === "KeyH") {
+    if (!lockedIn && !pendingSend) {
+      heatLev = heatLev === 1 ? 2 : 1;
+      paintProducts();
+    }
+  }
   if (e.code === "Digit1") ridge = "calm";
   if (e.code === "Digit2") ridge = "rise";
   if (e.code === "Digit3") ridge = "spike";
   paintRidges();
 });
 
-// unlock audio on first gesture
 window.addEventListener(
   "pointerdown",
   () => {
