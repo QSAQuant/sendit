@@ -13,7 +13,7 @@
 ## Side products (fixed tables — separate from crash RNG)
 | Product | Rule | House note |
 |---------|------|------------|
-| **PAPER** HALF/FULL | Premium on **notional**; snap while holding → α refund; CASH voids | Second GGR on fear |
+| **PAPER** HALF π=0.35 / FULL π=0.72 | Premium on **notional**; snap while holding → α refund; CASH voids | Second GGR on fear |
 | **ASH** | 10% of **margin lost** → next-fuse-only fuel | Session extender |
 | **HEAT 2×** | Optional; 3% fee on extra exposure | Soft-pedal for regulated pubs; crypto-forward |
 

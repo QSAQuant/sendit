@@ -27,6 +27,7 @@ Docs: `docs/illusion.md` · `docs/math.md`
 3. Hard-refresh demo and play TABLES → MYTHS → a fuse
 
 ## Change log
+- 2026-07-20 — Solvency fix: escrow full notional; PAPER FULL π=0.72; ASH fees-only; 80k sim all −EV for players
 - 2026-07-20 — Master illusion kit shipped (tabs + SNAP + codes)
 - 2026-07-20 — PAPER / ASH / HEAT 2×
 - 2026-07-20 — Packaging + Pages deploy

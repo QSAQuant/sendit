@@ -45,7 +45,7 @@ Optional cover bought **before** fuse. Premium on **N**, not M.
 |------|--------------------|------------------|---------|
 | OFF | 0 | 0 | 0 |
 | HALF | 0.5 | 0.35 | `0.35 · N` |
-| FULL | 1.0 | 0.55 | `0.55 · N` |
+| FULL | 1.0 | 0.72 | `0.72 · N` |
 
 **Claim:** if still holding at snap → pay `α · remainingNotional`.  
 **Void:** full **CASH** sets `paperActive=false` (premium sunk).  
@@ -105,10 +105,12 @@ See `outreach/emails.md` vs `outreach/crypto-anchor.md`.
 ## Send cost (cash debit)
 
 ```
-totalDebit   = M + heatFee + paperPremium(N)
+totalDebit   = N + heatFee + paperPremium(N)   # escrow FULL notional
 ashApplied   = min(ashAvailable, M)
 cashRequired = totalDebit − ashApplied
 ```
+
+**Why N not M:** If we only lock margin M but pay `N × mult` on cashout, HEAT 2× is strongly +EV for players (sim-proven). Full notional escrow keeps crash EV ≈ `−e · N` plus fees.
 
 ---
 

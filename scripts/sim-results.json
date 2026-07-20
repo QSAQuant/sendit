@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "roundsPerStrategy": 80000,
+    "note": "Ash modeled as next-fuse-only (expires if unused). House = cashIn - payouts - ashCredit.",
+    "generatedAt": "2026-07-20T08:39:17.358Z"
+  },
+  "strategies": [
+    {
+      "name": "Vanilla hold@2 SEND",
+      "rounds": 80000,
+      "houseTotal": 51960,
+      "playerTotal": -51960,
+      "housePerRound": 0.65,
+      "playerEvPerRound": -0.65,
+      "edgePct": 6.49,
+      "winRatePct": 46.75,
+      "turnover": 800000,
+      "paperPrem": 0,
+      "heatFees": 0,
+      "snapIn": 0
+    },
+    {
+      "name": "Vanilla hold@5 DEGEN",
+      "rounds": 80000,
+      "houseTotal": 78850,
+      "playerTotal": -78850,
+      "housePerRound": 0.99,
+      "playerEvPerRound": -0.99,
+      "edgePct": 9.86,
+      "winRatePct": 18.03,
+      "turnover": 800000,
+      "paperPrem": 0,
+      "heatFees": 0,
+      "snapIn": 0
+    },
+    {
+      "name": "HALF CHAD hold@2",
+      "rounds": 80000,
+      "houseTotal": 87362.4,
+      "playerTotal": -87362.4,
+      "housePerRound": 1.09,
+      "playerEvPerRound": -1.09,
+      "edgePct": 8.09,
+      "winRatePct": 46.54,
+      "turnover": 1080000,
+      "paperPrem": 280000,
+      "heatFees": 0,
+      "snapIn": 0
+    },
+    {
+      "name": "FULL void-vig cash@1.4",
+      "rounds": 80000,
+      "houseTotal": 337590.4,
+      "playerTotal": -337590.4,
+      "housePerRound": 4.22,
+      "playerEvPerRound": -4.22,
+      "edgePct": 24.55,
+      "winRatePct": 0,
+      "turnover": 1375200,
+      "paperPrem": 575200,
+      "heatFees": 0,
+      "snapIn": 0
+    },
+    {
+      "name": "HEAT2 hold@2",
+      "rounds": 80000,
+      "houseTotal": 135705.2,
+      "playerTotal": -135705.2,
+      "housePerRound": 1.7,
+      "playerEvPerRound": -1.7,
+      "edgePct": 8.36,
+      "winRatePct": 46.11,
+      "turnover": 1624000,
+      "paperPrem": 0,
+      "heatFees": 24000,
+      "snapIn": 0
+    },
+    {
+      "name": "HEAT2 + HALF hold@2",
+      "rounds": 80000,
+      "houseTotal": 234052.8,
+      "playerTotal": -234052.8,
+      "housePerRound": 2.93,
+      "playerEvPerRound": -2.93,
+      "edgePct": 10.72,
+      "winRatePct": 46.49,
+      "turnover": 2184000,
+      "paperPrem": 560000,
+      "heatFees": 24000,
+      "snapIn": 0
+    },
+    {
+      "name": "HEAT2 + FULL hold@3",
+      "rounds": 80000,
+      "houseTotal": 173222.4,
+      "playerTotal": -173222.4,
+      "housePerRound": 2.17,
+      "playerEvPerRound": -2.17,
+      "edgePct": 6.24,
+      "winRatePct": 29.91,
+      "turnover": 2775200,
+      "paperPrem": 1151200,
+      "heatFees": 24000,
+      "snapIn": 0
+    },
+    {
+      "name": "Peel@1.5 then hold@3",
+      "rounds": 80000,
+      "houseTotal": 89603.3,
+      "playerTotal": -89603.3,
+      "housePerRound": 1.12,
+      "playerEvPerRound": -1.12,
+      "edgePct": 8.3,
+      "winRatePct": 30.9,
+      "turnover": 1080000,
+      "paperPrem": 280000,
+      "heatFees": 0,
+      "snapIn": 0
+    },
+    {
+      "name": "COLD TAPE moon snap + HALF HEAT2",
+      "rounds": 80000,
+      "houseTotal": 274871.2,
+      "playerTotal": -274871.2,
+      "housePerRound": 3.44,
+      "playerEvPerRound": -3.44,
+      "edgePct": 11.73,
+      "winRatePct": 45.99,
+      "turnover": 2344000,
+      "paperPrem": 560000,
+      "heatFees": 24000,
+      "snapIn": 160000
+    },
+    {
+      "name": "SNAP only chop (ride cash@1.01)",
+      "rounds": 80000,
+      "houseTotal": 138621.9,
+      "playerTotal": -138621.9,
+      "housePerRound": 1.73,
+      "playerEvPerRound": -1.73,
+      "edgePct": 11.55,
+      "winRatePct": 31.13,
+      "turnover": 1200000,
+      "paperPrem": 0,
+      "heatFees": 0,
+      "snapIn": 400000
+    },
+    {
+      "name": "ASH LOOP always bust HEAT2",
+      "rounds": 80000,
+      "houseTotal": 1600000.3,
+      "playerTotal": -1600000.3,
+      "housePerRound": 20,
+      "playerEvPerRound": -20,
+      "edgePct": 98.52,
+      "winRatePct": 0,
+      "turnover": 1624000,
+      "paperPrem": 0,
+      "heatFees": 24000,
+      "snapIn": 0
+    },
+    {
+      "name": "Diamond hands forever + FULL",
+      "rounds": 80000,
+      "houseTotal": 511200.8,
+      "playerTotal": -511200.8,
+      "housePerRound": 6.39,
+      "playerEvPerRound": -6.39,
+      "edgePct": 37.17,
+      "winRatePct": 0,
+      "turnover": 1375200,
+      "paperPrem": 575200,
+      "heatFees": 0,
+      "snapIn": 0
+    }
+  ],
+  "mixedBook": {
+    "name": "MIXED BOOK (degen portfolio)",
+    "rounds": 80000,
+    "houseTotal": 206466.22,
+    "housePerRound": 2.58,
+    "edgePct": 15.09,
+    "turnover": 1368305.52
+  },
+  "rankingByHouseEdge": [
+    {
+      "name": "ASH LOOP always bust HEAT2",
+      "edgePct": 98.52,
+      "housePerRound": 20
+    },
+    {
+      "name": "Diamond hands forever + FULL",
+      "edgePct": 37.17,
+      "housePerRound": 6.39
+    },
+    {
+      "name": "FULL void-vig cash@1.4",
+      "edgePct": 24.55,
+      "housePerRound": 4.22
+    },
+    {
+      "name": "COLD TAPE moon snap + HALF HEAT2",
+      "edgePct": 11.73,
+      "housePerRound": 3.44
+    },
+    {
+      "name": "SNAP only chop (ride cash@1.01)",
+      "edgePct": 11.55,
+      "housePerRound": 1.73
+    },
+    {
+      "name": "HEAT2 + HALF hold@2",
+      "edgePct": 10.72,
+      "housePerRound": 2.93
+    },
+    {
+      "name": "Vanilla hold@5 DEGEN",
+      "edgePct": 9.86,
+      "housePerRound": 0.99
+    },
+    {
+      "name": "HEAT2 hold@2",
+      "edgePct": 8.36,
+      "housePerRound": 1.7
+    },
+    {
+      "name": "Peel@1.5 then hold@3",
+      "edgePct": 8.3,
+      "housePerRound": 1.12
+    },
+    {
+      "name": "HALF CHAD hold@2",
+      "edgePct": 8.09,
+      "housePerRound": 1.09
+    },
+    {
+      "name": "Vanilla hold@2 SEND",
+      "edgePct": 6.49,
+      "housePerRound": 0.65
+    },
+    {
+      "name": "HEAT2 + FULL hold@3",
+      "edgePct": 6.24,
+      "housePerRound": 2.17
+    }
+  ],
+  "anyPlayerPositiveEv": []
+}

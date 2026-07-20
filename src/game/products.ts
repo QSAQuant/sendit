@@ -13,8 +13,8 @@ export type HeatLev = 1 | 2;
 
 /** 3% fee on (L-1)*margin → 3% of margin at 2× */
 export const HEAT_FEE_RATE = 0.03;
-/** Bust → next-fuse-only fuel as % of margin lost */
-export const ASH_RATE = 0.1;
+/** Bust → next-fuse-only fuel as % of margin lost (fees/prem discount only) */
+export const ASH_RATE = 0.08;
 /** Demo note: ash wagers conceptually carry +2% edge vs cash lane */
 export const ASH_EDGE_BUMP = 0.02;
 
@@ -31,7 +31,8 @@ export const PAPER_TIERS: Record<
   },
   full: {
     alpha: 1,
-    pi: 0.55,
+    // Must clear fair π for longer holds (~0.69 at T=3 on SEND). 0.55 was player-+EV in sims.
+    pi: 0.72,
     label: "FULL",
     blurb: "100% notional back on snap",
   },
@@ -88,8 +89,10 @@ export function quoteSend(opts: {
   const N = notionalOf(margin, lev);
   const fee = heatFee(margin, lev);
   const prem = paperPremium(N, opts.paperTier);
-  const totalDebit = floor2(margin + fee + prem);
-  const ashApplied = Math.min(opts.ashAvailable, margin);
+  // CRITICAL: escrow full notional. Paying N×mult while only locking M makes HEAT +EV for players.
+  const totalDebit = floor2(N + fee + prem);
+  // ASH may only discount fees+premium — never notional escrow (sim: dollar ash vs N×mult is +EV).
+  const ashApplied = Math.min(opts.ashAvailable, floor2(fee + prem));
   const cashRequired = floor2(totalDebit - ashApplied);
   return {
     margin,
