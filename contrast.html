@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENDIT vs another plane</title>
+    <meta
+      name="description"
+      content="Aviator already owns the plane. SENDIT is the #2 crash tile: PAPER, SNAP, loadouts."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0b0b0c;
+        --paper: #f4f0e6;
+        --acid: #ff5a1f;
+        --fog: #9a9590;
+        --line: #2a2a2e;
+        --panel: #141416;
+        --danger: #ff2d55;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--paper);
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background:
+          radial-gradient(800px 420px at 100% 0%, #3a1808 0%, transparent 55%),
+          var(--ink);
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 28px 18px 64px;
+      }
+      .brand {
+        font-family: "Archivo Black", sans-serif;
+        font-size: clamp(40px, 12vw, 64px);
+        letter-spacing: -0.03em;
+        line-height: 0.9;
+      }
+      .tag {
+        margin-top: 8px;
+        color: var(--acid);
+        font-family: "IBM Plex Mono", monospace;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        font-size: 12px;
+      }
+      h1 {
+        margin: 28px 0 10px;
+        font-size: clamp(26px, 6vw, 36px);
+        line-height: 1.15;
+        font-weight: 700;
+      }
+      .lead {
+        color: var(--fog);
+        font-size: 16px;
+        line-height: 1.45;
+        max-width: 36rem;
+      }
+      .grid {
+        display: grid;
+        gap: 12px;
+        margin: 28px 0;
+      }
+      @media (min-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .card {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 14px;
+        padding: 16px;
+      }
+      .card.them {
+        opacity: 0.85;
+      }
+      .card.us {
+        border-color: color-mix(in srgb, var(--acid) 55%, var(--line));
+      }
+      .card h2 {
+        margin: 0 0 10px;
+        font-family: "Archivo Black", sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+      }
+      .card ul {
+        margin: 0;
+        padding-left: 1.1rem;
+        color: var(--fog);
+        line-height: 1.55;
+        font-size: 14px;
+      }
+      .card.us ul {
+        color: var(--paper);
+      }
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 8px;
+      }
+      a.btn {
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 14px;
+      }
+      a.primary {
+        background: var(--acid);
+        color: #1a0804;
+      }
+      a.ghost {
+        border: 1px solid var(--line);
+        color: var(--paper);
+      }
+      .note {
+        margin-top: 22px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        color: var(--fog);
+        line-height: 1.5;
+      }
+      .pill {
+        display: inline-block;
+        margin-top: 18px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: var(--danger);
+        border: 1px solid var(--danger);
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">SENDIT</div>
+      <div class="tag">DON'T PAPER.</div>
+      <div class="pill">#2 CRASH TILE — NOT AN AVIATOR KILLER</div>
+      <h1>They already have a plane. Give them a reason for a second crash.</h1>
+      <p class="lead">
+        Vanilla climb-and-cashout is owned. SENDIT keeps the dopamine spine and adds
+        priced decisions operators can sell: PAPER cover, SNAP death bands, HEAT 2×,
+        loadout myths degens argue about.
+      </p>
+
+      <div class="grid">
+        <section class="card them">
+          <h2>Typical crash lobby</h2>
+          <ul>
+            <li>Plane / rocket object</li>
+            <li>Cash timing only</li>
+            <li>One GGR line</li>
+            <li>“Why isn’t this Aviator?”</li>
+          </ul>
+        </section>
+        <section class="card us">
+          <h2>SENDIT</h2>
+          <ul>
+            <li>Burning fuse — new object</li>
+            <li>PAPER · PEEL · SNAP · HEAT</li>
+            <li>Second GGR from fear + side tickets</li>
+            <li>Loadout codes + public tables</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="cta">
+        <a class="btn primary" href="./index.html">Play the demo</a>
+        <a class="btn ghost" href="./lobby/peel-clip.svg">Silent peel clip</a>
+      </div>
+
+      <p class="note">
+        Publisher ask: Silver Bullet / BGaming Publishing / OpenRGS<br />
+        Anchor ask: 0% studio cut for 45 days ↔ lobby slot + weekly turnover screenshot<br />
+        Demo: https://qsaquant.github.io/sendit/<br />
+        Contrast: https://qsaquant.github.io/sendit/contrast.html
+      </p>
+    </main>
+  </body>
+</html>
